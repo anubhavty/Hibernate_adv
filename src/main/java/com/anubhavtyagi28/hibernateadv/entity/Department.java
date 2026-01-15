@@ -2,10 +2,7 @@ package com.anubhavtyagi28.hibernateadv.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +23,10 @@ public class Department {
 
 
     @OneToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, unique = true)
     private Doctor headDoctor;  //owning side
 
     @ManyToMany
-    private Set<Doctor> doctors = new HashSet<>();
+    @Builder.Default
+    private Set<Doctor> doctors = new HashSet<>(); //this will create join table by default
 }

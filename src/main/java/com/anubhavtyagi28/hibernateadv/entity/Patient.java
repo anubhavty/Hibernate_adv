@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.engine.internal.Cascade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@ToString
+@ToString(exclude = "insurance")
 @Getter
 @Setter
 public class Patient {
@@ -37,13 +38,11 @@ public class Patient {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_insurance", unique = true)
-    private Insurance insurance;    //owning side
+    private Insurance insurance;    //owning side is parent
 
 
-    @OneToMany(mappedBy = "patient")   //inverse side
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)   //inverse side
     private Set<Appointment> appointments = new HashSet<>();
-
-
 }

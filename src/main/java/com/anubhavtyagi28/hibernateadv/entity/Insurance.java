@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString(exclude = "patient")
 public class Insurance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,7 @@ public class Insurance {
 
 
     @OneToOne(mappedBy = "insurance")
+//    @ToString.Exclude
     private Patient patient;    //inverse side
 
 }
